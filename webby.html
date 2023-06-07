@@ -45,12 +45,31 @@
       text-decoration: underline;
     }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+  <script>
+    function decrypt() {
+        var encryptedMessage = document.getElementById("encryptedMessage").value;
+        var key = CryptoJS.enc.Hex.parse("112233445566778899AABBCCDDEEFF00");
+        
+        var decryptedBytes = CryptoJS.AES.decrypt(encryptedMessage, key, { mode: CryptoJS.mode.ECB });
+        var decryptedMessage = decryptedBytes.toString(CryptoJS.enc.Utf8);
+        
+        document.getElementById("decryptedMessage").textContent = decryptedMessage;
+        document.getElementById("downloadLink").style.display = "block";
+    }
+  </script>
 </head>
 <body>
   <div class="container">
     <h1>Noa's Chat App</h1>
-    <p>To download the latest version of Noa's Chat App, click the link below:</p>
-    <a href="https://www.example.com/path/to/your-app.apk">Download Noa's Chat App</a>
+    <label for="encryptedMessage">Encrypted Message:</label>
+    <input type="text" id="encryptedMessage" />
+    <button onclick="decrypt()">Decrypt</button>
+    
+    <h2>Decrypted Message:</h2>
+    <p id="decryptedMessage"></p>
+    
+    <a id="downloadLink" href="https://www.example.com/path/to/your-app.apk" style="display: none;">Download Noa's Chat App</a>
   </div>
 </body>
 </html>
