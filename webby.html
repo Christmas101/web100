@@ -5,7 +5,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: url('https://static.vecteezy.com/system/resources/thumbnails/005/879/886/small/purple-orange-watercolor-background-pastel-mottled-border-texture-and-blurred-grunge-design-in-old-vintage-backgrounds-free-vector.jpg') no-repeat center center fixed; /* Replace 'https://example.com/pastel-wallpaper.jpg' with your desired wallpaper image URL */
+      background: url('https://static.vecteezy.com/system/resources/thumbnails/005/879/886/small/purple-orange-watercolor-background-pastel-mottled-border-texture-and-blurred-grunge-design-in-old-vintage-backgrounds-free-vector.jpg') no-repeat center center fixed;
       background-size: cover;
       margin: 0;
       padding: 0;
@@ -14,62 +14,99 @@
       align-items: center;
       min-height: 100vh;
     }
-    
+
     .container {
       text-align: center;
       padding: 40px;
-      background-color: #ffb6c1; /* Lighter pink color */
+      background-color: #ffb6c1;
       border-radius: 20px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     }
-    
+
     h1 {
-      font-size: 72px; /* Larger text size */
-      color: #ffffff; /* White text color */
+      font-size: 72px;
+      color: #ffffff;
       margin-bottom: 20px;
     }
-    
+
     p {
-      color: #ffffff; /* White text color */
-      font-size: 24px; /* Medium text size */
+      color: #ffffff;
+      font-size: 36px; /* Updated font size */
       margin-bottom: 20px;
     }
-    
+
+    input {
+      font-size: 36px; /* Updated font size */
+    }
+
+    button {
+      font-size: 36px; /* Updated font size */
+    }
+
     a {
-      color: #4682b4; /* Pastel Blue */
-      font-size: 36px; /* Larger text size */
+      color: #4682b4;
+      font-size: 36px;
       text-decoration: none;
     }
-    
+
     a:hover {
       text-decoration: underline;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transition: opacity 0.5s ease-in;
+    }
+
+    .fade-in.show {
+      opacity: 1;
+    }
+
+    .large-text {
+      font-size: 60px;
+      color: #4682b4;
+      transition: color 0.5s ease-in;
     }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
   <script>
     function decrypt() {
-        var encryptedMessage = document.getElementById("encryptedMessage").value;
-        var key = CryptoJS.enc.Hex.parse("112233445566778899AABBCCDDEEFF00");
+      var encryptedMessage = document.getElementById("encryptedMessage").value;
+      var key = CryptoJS.enc.Hex.parse("112233445566778899AABBCCDDEEFF00");
+      
+      var decryptedBytes = CryptoJS.AES.decrypt(encryptedMessage, key, { mode: CryptoJS.mode.ECB });
+      var decryptedMessage = decryptedBytes.toString(CryptoJS.enc.Utf8);
+      
+      var decryptedMessageElement = document.getElementById("decryptedMessage");
+      decryptedMessageElement.textContent = decryptedMessage;
+      
+      if (decryptedMessage !== "") {
+        decryptedMessageElement.classList.add("large-text");
+        decryptedMessageElement.classList.add("fade-in");
+        setTimeout(function() {
+          decryptedMessageElement.classList.add("show");
+        }, 100);
         
-        var decryptedBytes = CryptoJS.AES.decrypt(encryptedMessage, key, { mode: CryptoJS.mode.ECB });
-        var decryptedMessage = decryptedBytes.toString(CryptoJS.enc.Utf8);
-        
-        document.getElementById("decryptedMessage").textContent = decryptedMessage;
         document.getElementById("downloadLink").style.display = "block";
+      } else {
+        document.getElementById("downloadLink").style.display = "none";
+      }
     }
   </script>
 </head>
 <body>
   <div class="container">
     <h1>Noa's Chat App</h1>
-    <label for="encryptedMessage">Encrypted Message:</label>
-    <input type="text" id="encryptedMessage" />
-    <button onclick="decrypt()">Decrypt</button>
+    <label for="encryptedMessage" style="font-size: 36px;">Encrypted Message:</label>
+    <input type="text" id="encryptedMessage" style="font-size: 36px;" />
+    <button onclick="decrypt()" style="font-size: 36px;">Decrypt</button>
     
-    <h2>Decrypted Message:</h2>
-    <p id="decryptedMessage"></p>
+    <h2 style="font-size: 48px;">Decrypted Message:</h2>
+    <p id="decryptedMessage" class="fade-in"></p>
     
-    <a id="downloadLink" href="https://drive.google.com/file/d/1qrdMFJf9UaLG1Tf0VE7AHDZ_QwO6947Z/view?usp=sharing" style="display: none;">Download Noa's Chat App</a>
+    <div id="downloadLink" style="display: none;">
+      <a href="https://drive.google.com/file/d/1qrdMFJf9UaLG1Tf0VE7AHDZ_QwO6947Z/view?usp=sharing">Download Noa's Chat App</a>
+    </div>
   </div>
 </body>
 </html>
